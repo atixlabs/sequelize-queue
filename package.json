@@ -14,22 +14,22 @@
     "url": "https://github.com/overlookmotel/sequelize-queue/issues"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
-    "bluebird": "~2.3.11"
+    "bluebird": "^3.2.1",
+    "lodash": "^4.2.0"
   },
   "peerDependencies": {
-    "sequelize": "2.0.x"
+    "sequelize": "3.x.x"
   },
   "devDependencies": {
-    "mocha": "~2.0.1",
     "chai": "~1.10.0",
     "chai-as-promised": "~4.1.1",
-    "sequelize": "git://github.com/sequelize/sequelize.git",
-    "mysql": "~2.5.0",
-    "sqlite3": "~3.0.0",
-    "pg": "~3.6.0",
-    "mariasql": "~0.1.2",
-    "jshint": "~2.5.10"
+    "grunt": "^0.4.5",
+    "grunt-mocha-istanbul": "^3.0.1",
+    "istanbul": "^0.4.2",
+    "jshint": "~2.5.10",
+    "mocha": "~2.0.1",
+    "sequelize": "^3.19.0",
+    "sqlite3": "^3.1.1"
   },
   "keywords": [
     "sequelize",

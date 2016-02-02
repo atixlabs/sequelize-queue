@@ -103,13 +103,13 @@ var Support = {
 			.getQueryInterface()
 			.dropAllTables()
 			.then(function() {
-				sequelize.daoFactoryManager.daos = [];
+				/*sequelize.daoFactoryManager.daos = [];
 				return sequelize
 					.getQueryInterface()
 					.dropAllEnums()
 					.catch(function (err) {
 						console.log('Error in support.clearDatabase() dropAllEnums() :: ', err);
-					});
+					});*/
 			})
 			.catch(function(err) {
 				console.log('Error in support.clearDatabase() dropAllTables() :: ', err);
