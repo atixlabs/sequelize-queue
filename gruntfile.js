@@ -6,6 +6,12 @@ module.exports = function ( grunt ) {
 	grunt.initConfig ( {
 		pkg: grunt.file.readJSON ( 'package.json' ),
 
+		env: {
+			sqlite: {
+				DIALECT: 'sqlite'
+			}
+		},
+
 		mocha_istanbul: {
 			coverage: {
 				src: 'test', // the folder, not the files
@@ -18,10 +24,11 @@ module.exports = function ( grunt ) {
 		}
 	} )
 
+	grunt.loadNpmTasks ( 'grunt-env' )
 	grunt.loadNpmTasks ( 'grunt-mocha-istanbul' )
 
 	// Default task(s).
-	grunt.registerTask ( 'default', [
-		'mocha_istanbul:coverage'
+	grunt.registerTask ( 'sqlite', [
+		'env:sqlite', 'mocha_istanbul:coverage'
 	] )
 }
