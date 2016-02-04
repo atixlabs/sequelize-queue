@@ -1,10 +1,10 @@
 before_script:
   - "mysql -e 'create database sequelize_test;'"
-  - "psql -c 'create database sequelize_test;' -U sequelize_test"
+  - "psql -c 'create database sequelize_test;' -U postgres"
   - "export SEQ_USER=travis"
 
 script:
-  - "make test"
+  - "grunt all"
 
 env:
   - DB=mysql DIALECT=mysql
