@@ -15,20 +15,23 @@
   },
   "dependencies": {
     "bluebird": "^3.2.1",
-    "lodash": "^4.2.0"
+    "lodash": "^4.2.0",
+    "log": "^1.4.0"
   },
   "peerDependencies": {
     "sequelize": "3.x.x"
   },
   "devDependencies": {
-    "chai": "~1.10.0",
-    "chai-as-promised": "~4.1.1",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
     "grunt": "^0.4.5",
     "grunt-env": "^0.4.4",
     "grunt-mocha-istanbul": "^3.0.1",
     "istanbul": "^0.4.2",
     "jshint": "~2.5.10",
-    "mocha": "~2.0.1",
+    "mocha": "^2.4.5",
+    "pg": "^4.4.4",
+    "pg-hstore": "^2.3.2",
     "sequelize": "^3.19.0",
     "sqlite3": "^3.1.1"
   },
@@ -42,7 +45,7 @@
     "test": "make all"
   },
   "engines": {
-    "node": ">=0.6.21"
+    "node": ">=4.2.0"
   },
   "readmeFilename": "README.md",
   "licenses": [

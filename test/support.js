@@ -194,7 +194,7 @@ before(function() {
 		return;
 	}
 
-	return sequelize.query('CREATE EXTENSION IF NOT EXISTS hstore', null, {raw: true});
+	return sequelize.query('CREATE EXTENSION IF NOT EXISTS hstore');
 });
 
 beforeEach(function() {

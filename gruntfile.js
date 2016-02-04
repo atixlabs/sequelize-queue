@@ -9,6 +9,9 @@ module.exports = function ( grunt ) {
 		env: {
 			sqlite: {
 				DIALECT: 'sqlite'
+			},
+			postgres: {
+				DIALECT: 'postgres'
 			}
 		},
 
@@ -31,4 +34,12 @@ module.exports = function ( grunt ) {
 	grunt.registerTask ( 'sqlite', [
 		'env:sqlite', 'mocha_istanbul:coverage'
 	] )
+	grunt.registerTask ( 'postgres', [
+		'env:postgres', 'mocha_istanbul:coverage'
+	] )
+
+	grunt.registerTask ('default', ['sqlite'])
+
+	grunt.registerTask ('all', ['sqlite', 'postgres'])
+
 }
