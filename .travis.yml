@@ -1,6 +1,6 @@
 before_script:
   - "mysql -e 'create database sequelize_test;'"
-  - "psql -c 'create database sequelize_test;' -U sequelize_test -P sequelize_test"
+  - "psql -c 'create database sequelize_test;' -U sequelize_test"
   - "export SEQ_USER=travis"
 
 script:
@@ -15,13 +15,11 @@ env:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: DB=mysql DIALECT=sqlite
 
 language: node_js
 
 node_js:
-  - "0.10"
+  - "4.2"
 
 branches:
   only:
