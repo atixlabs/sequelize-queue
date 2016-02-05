@@ -42,6 +42,14 @@ function mustFailOnceProcessor() {
 	}
 }
 
+function addJobWithPriority( queue, num ) {
+	return queue.addJob( {
+		a: num
+	}, {
+		priority: num * 2
+	} )
+}
+
 // tests
 describe( Support.getTestDialectTeaser( 'Tests' ), function() {
 	this.timeout( 10000 )
@@ -55,9 +63,9 @@ describe( Support.getTestDialectTeaser( 'Tests' ), function() {
 		} );
 
 		return queue.init()
-			.then(() => {
+			.then( () => {
 				return queue.start()
-			})
+			} )
 			.then( function() {
 
 				return Promise.each( [ 1, 2, 3 ], function( num ) {
@@ -101,13 +109,13 @@ describe( Support.getTestDialectTeaser( 'Tests' ), function() {
 						a: 1
 					} )
 				} )
-				.delay(100)
+				.delay( 100 )
 				.catch( err => {
 					expect( err.message ).to.be.equal( 'No processor defined for a job of type \'default\'' )
 				} )
-				.finally(() => {
+				.finally( () => {
 					return queue.stop()
-				})
+				} )
 			return result;
 		} )
 
@@ -199,14 +207,6 @@ describe( Support.getTestDialectTeaser( 'Tests' ), function() {
 					default: defaultProcessor
 				}
 			} );
-
-			function addJobWithPriority( queue, num ) {
-				return queue.addJob( {
-					a: num
-				}, {
-					priority: num * 2
-				} )
-			}
 
 			return queue.init()
 				.then( () => {
@@ -416,5 +416,103 @@ describe( Support.getTestDialectTeaser( 'Tests' ), function() {
 						} );
 				} );
 		} )
+	} )
+
+	describe( 'Delete after run ', function() {
+		it( 'Should delete a job if configured even if it runs ok or fails', function() {
+			var queue = createQueue( this.sequelize, {
+				processors: {
+					default: mustFailOnceProcessor()
+				}
+			} );
+
+			return queue.init()
+				.then( () => {
+					return queue.addJob( {
+						a: 1
+					}, {
+						deleteAfterExecution: true
+					} );
+				} )
+				.then( () => {
+					return queue.addJob( {
+						a: 2
+					}, {
+						deleteAfterExecution: true
+					} );
+				} )
+				.then( () => {
+					return queue.addJob( {
+						a: 3
+					}, {
+						deleteAfterExecution: false
+					} );
+				} )
+				.then( () => {
+					return queue.start();
+				} )
+				.delay( 1000 )
+				.then( function() {
+					return queue.stop()
+				} )
+				.then( function() {
+					return queue.model.findAll( {
+							order: [
+								[ 'dateFinished', 'ASC' ]
+							]
+						} )
+						.then( function( results ) {
+							expect( results ).to.be.ok;
+							expect( results.length ).to.equal( 1 );
+							expect( JSON.parse( results[ 0 ].result ).b ).to.equal( 3 )
+						} );
+				} );
+		} );
+
+		it( 'Should not delete a job if retry is ok even if it\'s configured to do so', function() {
+			let successHandlerCalled = true;
+			var queue = createQueue( this.sequelize, {
+				processors: {
+					default: mustFailOnceProcessor()
+				},
+				successHandlers: {
+					default: function( result, jobId ) {
+						if(jobId === 1)
+							successHandlerCalled = true
+					}
+				},
+			} );
+
+			return queue.init()
+				.then( () => {
+					return queue.start();
+				} )
+				.then( function() {
+					return Promise.each( [ 1 ], function( num ) {
+							return queue.addJob( {
+								a: num
+							}, {
+								retryInterval: 100,
+								deleteAfterExecution: true
+							} );
+						} )
+						.delay( 5000 )
+						.then( () => {
+							return queue.stop()
+						} )
+						.then( function() {
+							return queue.model.findAll( {
+									order: [
+										[ 'id' ]
+									]
+								} )
+								.then( function( results ) {
+									expect( results ).to.be.ok;
+									expect( results.length ).to.equal( 0 );
+									expect( successHandlerCalled ).to.be.true
+								} );
+						} );
+				} );
+		} );
 	} )
 } );

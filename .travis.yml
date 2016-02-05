@@ -2,9 +2,10 @@ before_script:
   - "mysql -e 'create database sequelize_test;'"
   - "psql -c 'create database sequelize_test;' -U postgres"
   - "export SEQ_USER=travis"
+  - "npm install -g grunt-cli"
 
-before_install: npm install -g grunt-cli
-install: npm install
+install:
+  - "npm install"
 
 script:
   - "grunt all"
