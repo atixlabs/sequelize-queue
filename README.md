@@ -10,8 +10,8 @@ Packages like [queue](https://www.npmjs.org/package/queue) do a very nice job of
 
 ## Current status
 
-[![Build Status](https://secure.travis-ci.org/overlookmotel/sequelize-queue.png?branch=master)](http://travis-ci.org/overlookmotel/sequelize-queue)
-[![Dependency Status](https://david-dm.org/overlookmotel/sequelize-queue.png)](https://david-dm.org/overlookmotel/sequelize-queue)
+[![Build Status](https://secure.travis-ci.org/atixlabs/sequelize-queue.png?branch=master)](http://travis-ci.org/overlookmotel/sequelize-queue)
+[![Dependency Status](https://david-dm.org/atixabs/sequelize-queue.png)](https://david-dm.org/atixlabs/sequelize-queue)
 
 API should be stable. It's not well-tested yet and doesn't have features like retrying on unsuccessful job execution etc.
 
@@ -32,14 +32,14 @@ To load module:
 			// return a Promise
 		}
 	});
-	
+
 	// initialize the MySQL table which will contain the job list
 	queue.init().then(function() {
 		// this runs once the queue is up and running
-		
+
 		// start workers running
 		queue.start();
-		
+
 		// now do something else - the jobs will execute in the background
 	});
 
@@ -47,7 +47,7 @@ To load module:
 
 	queue.addJob(data).then(function(job) {
 		// this executes once the job is added to the queue NOT when the job is complete
-		
+
 		// `job` is a sequelize model instance with the details of the job
 		// it can be reloaded from db and examined to get current status of the job
 	});
