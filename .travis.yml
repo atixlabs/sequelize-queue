@@ -8,12 +8,11 @@ install:
   - "npm install"
 
 script:
-  - "grunt all"
+  - "grunt $DIALECT"
 
 env:
   - DB=mysql DIALECT=mysql
   - DB=mysql DIALECT=postgres
-  - DB=mysql DIALECT=postgres-native
   - DB=mysql DIALECT=sqlite
   - DB=mysql DIALECT=mariadb
 

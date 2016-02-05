@@ -12,6 +12,12 @@ module.exports = function ( grunt ) {
 			},
 			postgres: {
 				DIALECT: 'postgres'
+			},
+			mariadb : {
+				DIALECT: 'mariadb'
+			},
+			mysql : {
+				DIALECT: 'mysql'
 			}
 		},
 
@@ -34,12 +40,21 @@ module.exports = function ( grunt ) {
 	grunt.registerTask ( 'sqlite', [
 		'env:sqlite', 'mocha_istanbul:coverage'
 	] )
+
 	grunt.registerTask ( 'postgres', [
 		'env:postgres', 'mocha_istanbul:coverage'
 	] )
 
+	grunt.registerTask ( 'mariadb', [
+		'env:mariadb', 'mocha_istanbul:coverage'
+	] )
+
+	grunt.registerTask ( 'mysql', [
+		'env:mysql', 'mocha_istanbul:coverage'
+	] )
+
 	grunt.registerTask ('default', ['sqlite'])
 
-	grunt.registerTask ('all', ['sqlite', 'postgres'])
+	grunt.registerTask ('all', ['sqlite', 'postgres', 'mariadb', 'mysql'])
 
 }
